@@ -24,7 +24,7 @@ const App = () => {
   const [bad, setBad] = useState(0)
 
   const handleGoodClick = () => {
-    console.log('nice!')
+    console.log('sweet!')
     setGood(() => good + 1)
   }
   
