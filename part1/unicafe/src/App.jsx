@@ -34,7 +34,7 @@ const App = () => {
   }
   
   const handleBadClick = () => {
-    console.log('bad!')
+    console.log('that's bad!')
     setBad(() => bad + 1)
   }
 
