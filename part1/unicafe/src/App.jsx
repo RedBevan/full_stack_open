@@ -8,23 +8,11 @@ const Header = (props) => {
   )
 }
 
-const handleGoodClick = () => {
-  console.log('good!')
-}
-
-const handleNeutralClick = () => {
-  console.log('meh!')
-}
-
-const handleBadClick = () => {
-  console.log('bad!')
-}
-
 const Stats = (props) => {
   console.log(props)
   return (
     <div>
-      <p>{props.text}: ?</p>
+      <p>{props.text}: {props.value}</p>
     </div>
   )
 }
@@ -35,6 +23,21 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const handleGoodClick = () => {
+    console.log('good!')
+    setGood(() => good + 1)
+  }
+  
+  const handleNeutralClick = () => {
+    console.log('meh!')
+    setNeutral(() => neutral + 1)
+  }
+  
+  const handleBadClick = () => {
+    console.log('bad!')
+    setBad(() => bad + 1)
+  }
+
   return (
     <div>
       <Header text='Give feedback' />
@@ -42,9 +45,9 @@ const App = () => {
       <button onClick={handleNeutralClick}>Neutral</button>
       <button onClick={handleBadClick}>Bad</button>
       <Header text='Statistics' />
-      <Stats text='Good'/>
-      <Stats text='Neutral'/>
-      <Stats text='Bad'/>
+      <Stats text='Good' value={good} />
+      <Stats text='Neutral' value={neutral}/>
+      <Stats text='Bad' value={bad}/>
     </div>
   )
 }
