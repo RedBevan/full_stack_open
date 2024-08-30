@@ -8,14 +8,25 @@ const Header = (props) => {
   )
 }
 
-const Button = (props) => {
-  return (
-    <button onClick={() => {handleClick(props.text)}}>{props.text}</button>
-  )
+const handleGoodClick = () => {
+  console.log('good!')
 }
 
-const handleClick = (props) => {
-  console.log('click', props)
+const handleNeutralClick = () => {
+  console.log('meh!')
+}
+
+const handleBadClick = () => {
+  console.log('bad!')
+}
+
+const Stats = (props) => {
+  console.log(props)
+  return (
+    <div>
+      <p>{props.text}: ?</p>
+    </div>
+  )
 }
 
 const App = () => {
@@ -27,11 +38,13 @@ const App = () => {
   return (
     <div>
       <Header text='Give feedback' />
-      <Button text='good'/>
-      <Button text='neutral'/>
-      <Button text='bad'/>
+      <button onClick={handleGoodClick}>Good</button>
+      <button onClick={handleNeutralClick}>Neutral</button>
+      <button onClick={handleBadClick}>Bad</button>
       <Header text='Statistics' />
-      <div>more code here</div>
+      <Stats text='Good'/>
+      <Stats text='Neutral'/>
+      <Stats text='Bad'/>
     </div>
   )
 }
