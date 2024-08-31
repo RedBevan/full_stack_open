@@ -25,17 +25,21 @@ const App = () => {
   const [all, setAll] = useState(0)
   const [score, setScore] = useState(0)
   const [average, setAverage] = useState(0)
+  const [percentPositive, setPercentPositive] = useState(0)
 
   const handleGoodClick = () => {
     console.log('good!')
     console.log('all', all)
-    setGood(() => good + 1)
+    let newGood = good + 1
+    setGood(() => newGood)
     let newAll = all + 1
     setAll(() => newAll)
     let newScore = score + 1
     setScore(newScore)
     console.log('all', all)
     calculateAverage(newScore, newAll)
+    let percentPositive = calculatePercentage(newGood, newAll)
+    setPercentPositive(percentPositive)
   }
   
   const handleNeutralClick = () => {
@@ -46,6 +50,8 @@ const App = () => {
     let newScore = score
     setScore(newScore)
     calculateAverage(newScore, newAll)
+    let percentPositive = calculatePercentage(good, newAll)
+    setPercentPositive(percentPositive)
   }
   
   const handleBadClick = () => {
@@ -57,11 +63,17 @@ const App = () => {
     setScore(newScore)
     console.log('all', all)
     calculateAverage(newScore, newAll)
+    let percentPositive = calculatePercentage(good, newAll)
+    setPercentPositive(percentPositive)
   }
 
   const calculateAverage = (sum, divisor) => {
     console.log('Average!')
     setAverage(sum/divisor)
+  }
+
+  const calculatePercentage = (value, totalValue) => {
+    return (value/totalValue)*100
   }
 
   return (
@@ -75,8 +87,9 @@ const App = () => {
       <Stats text='Neutral' value={neutral}/>
       <Stats text='Bad' value={bad}/>
       <Stats text='All' value={all} />
-      <Stats text='Score' value={score} />
+      {/* <Stats text='Score' value={score} /> */}
       <Stats text='Average' value={average} />
+      <Stats text='Positive' value={percentPositive} />
     </div>
   )
 }
