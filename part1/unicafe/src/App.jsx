@@ -11,9 +11,12 @@ const Header = (props) => {
 const StatisticsLine = (props) => {
   console.log(props)
   return (
-    <div>
-      <p>{props.text}: {props.value}</p>
-    </div>
+    <>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
+    </>
   )
 }
 
@@ -24,14 +27,18 @@ const Statistics = ({ good, neutral, bad, all, average, percentPositive }) => {
     </p>
   }
   return (
-    <div>
+    <>
+    <table>
+    <tbody>
       <StatisticsLine text="Good" value={good} />
       <StatisticsLine text="Neutral" value={neutral} />
       <StatisticsLine text="Bad" value={bad} />
       <StatisticsLine text="All" value={all} />
       <StatisticsLine text="Average" value={average} />
       <StatisticsLine text="Positive" value={percentPositive} />
-    </div>
+      </tbody>
+      </table>
+    </>
   )
 }
 
