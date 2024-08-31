@@ -22,20 +22,46 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [all, setAll] = useState(0)
+  const [score, setScore] = useState(0)
+  const [average, setAverage] = useState(0)
 
   const handleGoodClick = () => {
-    console.log('sweet!')
+    console.log('good!')
+    console.log('all', all)
     setGood(() => good + 1)
+    let newAll = all + 1
+    setAll(() => newAll)
+    let newScore = score + 1
+    setScore(newScore)
+    console.log('all', all)
+    calculateAverage(newScore, newAll)
   }
   
   const handleNeutralClick = () => {
     console.log('meh!')
     setNeutral(() => neutral + 1)
+    let newAll = all + 1
+    setAll(() => newAll)
+    let newScore = score
+    setScore(newScore)
+    calculateAverage(newScore, newAll)
   }
   
   const handleBadClick = () => {
-    console.log('that's bad!')
+    console.log('bad!')
     setBad(() => bad + 1)
+    let newAll = all + 1
+    setAll(() => newAll)
+    let newScore = score - 1
+    setScore(newScore)
+    console.log('all', all)
+    calculateAverage(newScore, newAll)
+  }
+
+  const calculateAverage = (sum, divisor) => {
+    console.log('Average!')
+    setAverage(sum/divisor)
   }
 
   return (
@@ -48,6 +74,9 @@ const App = () => {
       <Stats text='Good' value={good} />
       <Stats text='Neutral' value={neutral}/>
       <Stats text='Bad' value={bad}/>
+      <Stats text='All' value={all} />
+      <Stats text='Score' value={score} />
+      <Stats text='Average' value={average} />
     </div>
   )
 }
