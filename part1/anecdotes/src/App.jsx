@@ -14,19 +14,43 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
 
-  const selectAnecdote = () => {
+  const [points, setPoints] = useState({
+    0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0
+  })
+
+  const generateRandomNumber = () => {
     let numOfAnecdotes = anecdotes.length
-    let randomNumber = (Math.floor(Math.random()*numOfAnecdotes))
-    setSelected(randomNumber)
+    return ( Math.floor(Math.random()*numOfAnecdotes)
+    )
+}
+
+  const selectAnecdote = () => {
+    console.log(points)
+    let anecdoteNumber = generateRandomNumber()
+    setSelected(anecdoteNumber)
+  }
+
+  const vote = () => {
+    console.log('Voted')
+    let anecdoteNumber = {selected}.selected
+    let copyPoints = {...points}
+    copyPoints[anecdoteNumber] +=1
+    setPoints(copyPoints)
   }
 
   return (
     <>
     <div>
-      <button onClick={selectAnecdote}>New anecdote</button> 
+      <button onClick={selectAnecdote}>New anecdote</button>
+      <button onClick={vote}>Vote</button>
     </div>
     <div>
     {anecdotes[selected]}
+    </div>
+    <div>
+      <p>
+        Has {points[selected]} votes
+      </p>
     </div>
     </>
   )
