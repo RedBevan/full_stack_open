@@ -1,5 +1,33 @@
 import { useState } from 'react'
 
+const Heading = ({text}) => {
+  return (
+    <div>
+      <h1>{text}</h1>
+    </div>
+  )
+}
+
+const Anecdote = (props) => {
+  console.log(props)
+  return (
+    <>
+    <div>
+        <p>{props.anecdote}</p>
+      </div>
+      <div>
+        <p>Has {props.index} votes</p>
+      </div>
+    </>
+  )
+}
+
+const Button = (props) => {
+  return (
+    <button onClick={props.onClick}>{props.text}</button>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -18,6 +46,14 @@ const App = () => {
     0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0
   })
 
+  const [mostPopular, setMostPopular] = useState()
+
+  let started = false
+
+  const start = () => {
+    started = true
+  }
+
   const generateRandomNumber = () => {
     let numOfAnecdotes = anecdotes.length
     return ( Math.floor(Math.random()*numOfAnecdotes)
@@ -25,32 +61,34 @@ const App = () => {
 }
 
   const selectAnecdote = () => {
-    console.log(points)
     let anecdoteNumber = generateRandomNumber()
     setSelected(anecdoteNumber)
   }
 
   const vote = () => {
-    console.log('Voted')
-    let anecdoteNumber = {selected}.selected
+    let anecdoteNumber = selected
     let copyPoints = {...points}
     copyPoints[anecdoteNumber] +=1
     setPoints(copyPoints)
+    findMostPopular(copyPoints)
+  }
+
+  const findMostPopular = (updatedPoints) => {
+    let pointsArray = Object.values(updatedPoints)
+    let highestPoints = Math.max(...pointsArray)
+    let highestPointsIndex = (pointsArray.indexOf(highestPoints))
+    setMostPopular(highestPointsIndex)
   }
 
   return (
     <>
+    <Heading text='Anecdote of the day' />
+    <Anecdote anecdote={anecdotes[selected]} index={points[selected]} />
+    <Button onClick={selectAnecdote} text='New anecdote' />
+    <Button onClick={vote} text='Vote' />
     <div>
-      <button onClick={selectAnecdote}>New anecdote</button>
-      <button onClick={vote}>Vote</button>
-    </div>
-    <div>
-    {anecdotes[selected]}
-    </div>
-    <div>
-      <p>
-        Has {points[selected]} votes
-      </p>
+      <Heading text='Anecdote with most votes' />
+      <Anecdote anecdote = {anecdotes[mostPopular]} index={points[mostPopular]} />
     </div>
     </>
   )
