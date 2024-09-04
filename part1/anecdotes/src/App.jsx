@@ -8,23 +8,22 @@ const Heading = ({text}) => {
   )
 }
 
-const Anecdote = (props) => {
-  console.log(props)
+const Anecdote = ({anecdote, votes}) => {
   return (
     <>
     <div>
-        <p>{props.anecdote}</p>
+        <p>{anecdote}</p>
       </div>
       <div>
-        <p>Has {props.index} votes</p>
+        <p>Has {votes} {votes === 1 ? 'vote' : 'votes'}</p>
       </div>
     </>
   )
 }
 
-const Button = (props) => {
+const Button = ({onClick, text}) => {
   return (
-    <button onClick={props.onClick}>{props.text}</button>
+    <button onClick={onClick}>{text}</button>
   )
 }
 
@@ -46,22 +45,16 @@ const App = () => {
     0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0
   })
 
-  const [mostPopular, setMostPopular] = useState()
+  const [mostPopular, setMostPopular] = useState(0)
 
-  let started = false
-
-  const start = () => {
-    started = true
+  const generateRandomNumber = (max) => {
+    console.log(max)
+    return ( Math.floor(Math.random()*max)
+    )
   }
 
-  const generateRandomNumber = () => {
-    let numOfAnecdotes = anecdotes.length
-    return ( Math.floor(Math.random()*numOfAnecdotes)
-    )
-}
-
   const selectAnecdote = () => {
-    let anecdoteNumber = generateRandomNumber()
+    let anecdoteNumber = generateRandomNumber(anecdotes.length)
     setSelected(anecdoteNumber)
   }
 
@@ -83,12 +76,12 @@ const App = () => {
   return (
     <>
     <Heading text='Anecdote of the day' />
-    <Anecdote anecdote={anecdotes[selected]} index={points[selected]} />
+    <Anecdote anecdote={anecdotes[selected]} votes={points[selected]} />
     <Button onClick={selectAnecdote} text='New anecdote' />
     <Button onClick={vote} text='Vote' />
     <div>
       <Heading text='Anecdote with most votes' />
-      <Anecdote anecdote = {anecdotes[mostPopular]} index={points[mostPopular]} />
+      <Anecdote anecdote = {anecdotes[mostPopular]} votes={points[mostPopular]} />
     </div>
     </>
   )
