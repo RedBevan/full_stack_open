@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import phonebookService from './services/phonebook'
 
 const Person = ({persons}) => {
   return (
@@ -19,10 +20,9 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
 
   useEffect(() => {
-    axios
-    .get('http://localhost:3001/persons')
+    phonebookService
+    .getAll()
     .then(response => {
-      console.log(response.data)
       setPersons(response.data)
     })
   }, [])
@@ -56,15 +56,14 @@ const App = () => {
 
     console.log(personObject)
 
-    axios
-      .post('http://localhost:3001/persons', personObject)
+    phonebookService
+      .create(personObject)
       .then(response => {
-        console.log(response)
-        console.log(response.data)
         setPersons(persons.concat(response.data))
         setNewName('')
         setNewNumber('')
       })
+
   }
 
   const handleNameChange = (event) => {
@@ -81,7 +80,6 @@ const App = () => {
     console.log(persons)
     let namesArr = persons.map(person => person.name)
     console.log(namesArr)
-
   }
 
   return (
