@@ -1,18 +1,6 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import phonebookService from './services/phonebook'
-
-const Person = ({persons}) => {
-  return (
-    <>
-      {persons.map((person) => (
-        <div key={person.name}>
-          <div>{person.name}: {person.number}</div>
-        </div>
-      ))}
-    </>
-  )
-}
+import Person from './components/Person'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -63,7 +51,6 @@ const App = () => {
         setNewName('')
         setNewNumber('')
       })
-
   }
 
   const handleNameChange = (event) => {
@@ -76,10 +63,19 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
-  const logPersons = () => {
-    console.log(persons)
-    let namesArr = persons.map(person => person.name)
-    console.log(namesArr)
+  const deletePerson = (id) => {
+    const person = persons.find(p => p.id === id)
+
+    if (person && window.confirm(`Delete ${person.name}?`)) {
+      phonebookService
+        .deleteItem(id)
+        .then(() => {
+          setPersons(persons.filter(p => p.id !== id))
+        })
+        .catch(error => {
+          alert(`Failed to delete ${person.name}`)
+        })
+    }
   }
 
   return (
@@ -107,8 +103,10 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Person persons={persons}/>
-      <button onClick={logPersons}>log persons</button>
+      <Person 
+      persons={persons}
+      deletePerson={deletePerson}
+      />
     </div>
   )
 }
