@@ -6,11 +6,6 @@
       "id": "1"
     },
     {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": "2"
-    },
-    {
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": "3"
@@ -28,12 +23,12 @@
     {
       "id": "d775",
       "name": "Johnny Cash",
-      "number": "43454-2424-333"
+      "number": "2323232"
     },
     {
-      "id": "b246",
-      "name": "Fred McDowell",
-      "number": "4554-2323-55"
+      "id": "6145",
+      "name": "James McIntosh",
+      "number": "45354353"
     }
   ]
 }

@@ -19,6 +19,7 @@ const App = () => {
 
     // create array of names in lower case
     let personsLower = persons.map((person) => person.name.toLowerCase())
+    console.log(personsLower)
 
     // Create new var of new name in lower case
     let possibleNewNameLower = possibleNewName.toLowerCase()
@@ -29,10 +30,35 @@ const App = () => {
   
   const addName = (event) => {
     event.preventDefault()
+
+    if (nameExists(newName)
+    && window.confirm(`${newName} is already in the phonebook. Update their number?`)) {
+
+      console.log('UPDATED')
+      const person = persons.find(p => p.name === newName)
+      console.log(person)
+
+      const changedPerson = { ...person, number: newNumber }
+
+      phonebookService
+        .update(person.id, changedPerson)
+        .then((response) => {
+          console.log(response.data)
+          setPersons(persons.map(p => p.id !== person.id ? p : response.data))
+        })
+        .catch(error => {
+          alert('Did not update')
+        })
+
+      setNewName('');
+      setNewNumber('')
+      return;
+    }
     
     // if (nameExists(newName)) {
     //   alert('This name is already in the phonebook');
     //   setNewName('')
+    //   setNewNumber('');
     //   return;
     // }
 
