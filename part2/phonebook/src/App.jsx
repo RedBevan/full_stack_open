@@ -31,6 +31,16 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault()
 
+    if (newName === '') {
+      alert('No name inputted');
+      return;
+    }
+
+    if (newNumber === '') {
+      alert('No number inputted');
+      return;
+    }
+
     if (nameExists(newName)
     && window.confirm(`${newName} is already in the phonebook. Update their number?`)) {
 
