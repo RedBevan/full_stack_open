@@ -1,25 +1,37 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Person = ({persons}) => {
   return (
-    <div>
+    <>
       {persons.map((person) => (
         <div key={person.name}>
-          {person.name}
+          <div>{person.name}: {person.number}</div>
         </div>
       ))}
-      </div>
+    </>
   )
 }
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Fred Flinstone' }
+    { 
+      name: 'Fred Flinstone',
+      number: '00'
+    }
   ]) 
   const [newName, setNewName] = useState('')
 
+  useEffect(() => {
+    axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      console.log(response.data)
+      setPersons(response.data)
+    })
+  }, [])
+
   const nameExists = (possibleNewName) => {
-    // This function is not case sensitive
 
     // create array of names in lower case
     let personsLower = persons.map((person) => person.name.toLowerCase())
