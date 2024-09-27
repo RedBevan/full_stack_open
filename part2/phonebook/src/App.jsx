@@ -14,13 +14,9 @@ const Person = ({persons}) => {
 }
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { 
-      name: 'Fred Flinstone',
-      number: '00'
-    }
-  ]) 
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
   useEffect(() => {
     axios
@@ -46,22 +42,39 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault()
     
-    if (nameExists(newName)) {
-      alert('This name is already in the phonebook');
-      setNewName('')
-      return;
-    }
+    // if (nameExists(newName)) {
+    //   alert('This name is already in the phonebook');
+    //   setNewName('')
+    //   return;
+    // }
 
-    const personObject = { name: newName };
+    const personObject = { name: newName, number: newNumber };
 
     setPersons(prevPersons => [...prevPersons, personObject]);
 
-    setNewName('')
+    console.log(`PERSONS`, persons);
+
+    console.log(personObject)
+
+    axios
+      .post('http://localhost:3001/persons', personObject)
+      .then(response => {
+        console.log(response)
+        console.log(response.data)
+        setPersons(persons.concat(response.data))
+        setNewName('')
+        setNewNumber('')
+      })
   }
 
   const handleNameChange = (event) => {
     console.log(event.target.value);
     setNewName(event.target.value)
+  }
+
+  const handleNumberChange = (event) => {
+    console.log(event.target.value);
+    setNewNumber(event.target.value)
   }
 
   const logPersons = () => {
@@ -82,6 +95,15 @@ const App = () => {
           onChange={handleNameChange}
           />
         </div>
+
+        <div>
+          number:
+          <input
+          value={newNumber}
+          onChange={handleNumberChange}
+          />
+        </div>
+
         <div>
           <button type="submit">add</button>
         </div>
