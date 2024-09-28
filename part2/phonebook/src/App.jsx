@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import phonebookService from './services/phonebook'
 import Person from './components/Person'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     phonebookService
@@ -64,13 +66,6 @@ const App = () => {
       setNewNumber('')
       return;
     }
-    
-    // if (nameExists(newName)) {
-    //   alert('This name is already in the phonebook');
-    //   setNewName('')
-    //   setNewNumber('');
-    //   return;
-    // }
 
     const personObject = { name: newName, number: newNumber };
 
@@ -84,6 +79,10 @@ const App = () => {
       .create(personObject)
       .then(response => {
         setPersons(persons.concat(response.data))
+        setNotification(`${newName} added to phonebook`)
+        setTimeout(() => {
+          setNotification(null)
+        }, 2000)
         setNewName('')
         setNewNumber('')
       })
@@ -106,7 +105,11 @@ const App = () => {
       phonebookService
         .deleteItem(id)
         .then(() => {
-          setPersons(persons.filter(p => p.id !== id))
+          setPersons(persons.filter(p => p.id !== id));
+          setNotification(`${person.name} removed from phonebook`)
+          setTimeout(() => {
+            setNotification(null)
+          }, 2000)
         })
         .catch(error => {
           alert(`Failed to delete ${person.name}`)
@@ -116,7 +119,8 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Notification message={notification} />
       <form onSubmit={addName}>
         <div>
           name: 
