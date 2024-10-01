@@ -68,6 +68,10 @@ const App = () => {
         .then((response) => {
           console.log(response.data);
           setPersons(persons.map(p => p.id !== person.id ? p : response.data));
+          setNotification(`Number for ${newName} updated`);
+        setTimeout(() => {
+          setNotification(null);
+        }, 2000);
         })
         .catch((error) => {
           alert('Did not update');
