@@ -1,16 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": "1"
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": "3"
-    },
-    {
       "id": "a63a",
       "name": "Lee 'Scratch' Perry",
       "number": "64-56"
@@ -18,27 +8,27 @@
     {
       "id": "6db7",
       "name": "Johnny Cash",
-      "number": "343544"
+      "number": "453454"
     },
     {
-      "id": "46d1",
-      "name": "Marie Curie",
-      "number": "54536546"
+      "id": "3389",
+      "name": "Buddy Holly",
+      "number": "123"
     },
     {
-      "id": "724a",
-      "name": "Lee Van Cleef",
-      "number": "454354645"
+      "id": "79b3",
+      "name": "Dave Van Ronk",
+      "number": "666"
     },
     {
-      "id": "eece",
-      "name": "Jonas Runnings",
-      "number": "4543"
+      "id": "4714",
+      "name": "Bob Dylan",
+      "number": "2222"
     },
     {
-      "id": "150c",
-      "name": "Wiley Coyote",
-      "number": "45564"
+      "id": "597d",
+      "name": "Dolly Parton",
+      "number": "3333"
     }
   ]
 }

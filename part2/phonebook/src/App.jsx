@@ -11,26 +11,13 @@ const App = () => {
 
   useEffect(() => {
     phonebookService
-    .getAll()
-    .then(response => {
-      setPersons(response.data)
-    })
-  }, [])
-
-  const nameExists = (possibleNewName) => {
-
-    // create array of names in lower case
-    let personsLower = persons.map((person) => person.name.toLowerCase())
-    console.log(personsLower)
-
-    // Create new var of new name in lower case
-    let possibleNewNameLower = possibleNewName.toLowerCase()
-
-    // check if lower case array contains lower case name
-    return personsLower.some(person => person === possibleNewNameLower);
-  }; 
+      .getAll()
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [persons])
   
-  const addName = (event) => {
+  const addName = async (event) => {
     event.preventDefault()
 
     if (newName === '') {
@@ -43,60 +30,81 @@ const App = () => {
       return;
     }
 
-    if (nameExists(newName)
-    && window.confirm(`${newName} is already in the phonebook. Update their number?`)) {
+    // Check if name exists asynchronously
+    const nameExists = async (possibleName) => {
+      const possibleNameLower = possibleName.toLowerCase();
 
+      try {
+        const response = await phonebookService.getAll();
+
+        // create array of names from server in lower case
+        const lowerCaseNames = response.data.map((person) => person.name.toLowerCase());
+
+        // Return true if name exists, false if not
+        return lowerCaseNames.some((name) => name === possibleNameLower);
+      } catch (error) {
+        console.log("Error fetching data", error);
+        return false;
+      }
+    };
+
+    console.log(newName);
+
+    // Wait for the result of nameExists
+    const doesNameExist = await nameExists(newName);
+
+    console.log(doesNameExist);
+
+    if (doesNameExist && window.confirm(`${newName} is already in the phonebook. Update their number?`)) {
       console.log('UPDATED')
-      const person = persons.find(p => p.name === newName)
+
+      const person = persons.find(p => p.name.toLowerCase() === newName.toLowerCase());
       console.log(person)
 
-      const changedPerson = { ...person, number: newNumber }
+      const changedPerson = { ...person, number: newNumber };
 
       phonebookService
         .update(person.id, changedPerson)
         .then((response) => {
-          console.log(response.data)
-          setPersons(persons.map(p => p.id !== person.id ? p : response.data))
+          console.log(response.data);
+          setPersons(persons.map(p => p.id !== person.id ? p : response.data));
         })
-        .catch(error => {
-          alert('Did not update')
-        })
-
+        .catch((error) => {
+          alert('Did not update');
+        });
       setNewName('');
-      setNewNumber('')
+      setNewNumber('');
       return;
     }
 
+    // If name doesn't exist, add new person
     const personObject = { name: newName, number: newNumber };
 
     setPersons(prevPersons => [...prevPersons, personObject]);
 
-    console.log(`PERSONS`, persons);
-
-    console.log(personObject)
-
     phonebookService
       .create(personObject)
       .then(response => {
-        setPersons(persons.concat(response.data))
-        setNotification(`${newName} added to phonebook`)
+        setPersons(persons.concat(response.data));
+        setNotification(`${newName} added to phonebook`);
         setTimeout(() => {
-          setNotification(null)
-        }, 2000)
-        setNewName('')
-        setNewNumber('')
+          setNotification(null);
+        }, 2000);
+        setNewName('');
+        setNewNumber('');
       })
-  }
+      .catch((error) => {
+        console.log("Couldn't add person");
+      });
+  };
 
   const handleNameChange = (event) => {
-    console.log(event.target.value);
     setNewName(event.target.value)
-  }
+  };
 
   const handleNumberChange = (event) => {
-    console.log(event.target.value);
     setNewNumber(event.target.value)
-  }
+  };
 
   const deletePerson = (id) => {
     const person = persons.find(p => p.id === id)
@@ -106,16 +114,16 @@ const App = () => {
         .deleteItem(id)
         .then(() => {
           setPersons(persons.filter(p => p.id !== id));
-          setNotification(`${person.name} removed from phonebook`)
+          setNotification(`${person.name} removed from phonebook`);
           setTimeout(() => {
-            setNotification(null)
-          }, 2000)
+            setNotification(null);
+          }, 2000);
         })
         .catch(error => {
-          alert(`Failed to delete ${person.name}`)
-        })
+          alert(`Failed to delete ${person.name}`);
+        });
     }
-  }
+  };
 
   return (
     <div>
@@ -144,11 +152,11 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <Person 
-      persons={persons}
-      deletePerson={deletePerson}
+        persons={persons}
+        deletePerson={deletePerson}
       />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
