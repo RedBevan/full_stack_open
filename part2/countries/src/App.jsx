@@ -69,7 +69,7 @@ const App = () => {
             />
           </div>
         </form>
-        <MatchingCountries searchedCountry={searchedCountry} matchingCountries={matchingCountries} />
+        <MatchingCountries searchedCountry={searchedCountry} matchingCountries={matchingCountries} displayedCountry={displayedCountry}/>
         <div>
           <Country country={displayedCountry} />
         </div>

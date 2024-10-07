@@ -1,8 +1,14 @@
-const MatchingCountries = ({ searchedCountry, matchingCountries }) => {
+const MatchingCountries = ({ searchedCountry, matchingCountries, displayedCountry }) => {
 
   if (searchedCountry === null) {
     return (
         null
+    )
+  }
+
+  if (displayedCountry != null) {
+    return (
+      null
     )
   }
 
@@ -14,13 +20,13 @@ const MatchingCountries = ({ searchedCountry, matchingCountries }) => {
     )
   }
 
-  if (matchingCountries.length <= 1000) {
+  if (matchingCountries.length <= 10) {
     return (
       <>
         {matchingCountries.map((country) => {
           return (
             <ul key={country}>
-              <li>{country}</li>
+              <li>{country}</li><button>show</button>
             </ul>
           )
           })}
