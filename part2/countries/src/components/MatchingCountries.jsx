@@ -1,4 +1,4 @@
-const MatchingCountries = ({ searchedCountry, matchingCountries, displayedCountry }) => {
+const MatchingCountries = ({ searchedCountry, matchingCountries, displayedCountry, showCountry }) => {
 
   if (searchedCountry === null) {
     return (
@@ -26,13 +26,14 @@ const MatchingCountries = ({ searchedCountry, matchingCountries, displayedCountr
         {matchingCountries.map((country) => {
           return (
             <ul key={country}>
-              <li>{country}</li><button>show</button>
+              <li>{country}</li><button onClick={() => showCountry(country)}>show</button>
             </ul>
           )
           })}
       </>
     )
   }
+  return null
 }
 
 export default MatchingCountries

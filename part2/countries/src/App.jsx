@@ -33,15 +33,7 @@ const App = () => {
 
     setMatchingCountries(countryMatches)
 
-    // if (countryMatches.length <= 10) {
-    //   console.log('less than ten')
-    // setMatchingCountries(countryMatches)
-    // } else {
-    //   setMatchingCountries([])
-    // }
-
     if (countryMatches.length === 1) {
-      console.log('only one country!')
       axios
       .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${countryToShow}`)
       .then(response => {
@@ -56,6 +48,15 @@ const App = () => {
     setSearchedCountry(event.target.value)
   };
 
+  const showCountry = (country) => {
+    console.log(country)
+
+    setSearchedCountry(country)
+
+    console.log(searchedCountry)
+
+  }
+
   return (
     <>
       <div>
@@ -69,7 +70,7 @@ const App = () => {
             />
           </div>
         </form>
-        <MatchingCountries searchedCountry={searchedCountry} matchingCountries={matchingCountries} displayedCountry={displayedCountry}/>
+        <MatchingCountries searchedCountry={searchedCountry} matchingCountries={matchingCountries} displayedCountry={displayedCountry} showCountry={showCountry}/>
         <div>
           <Country country={displayedCountry} />
         </div>
