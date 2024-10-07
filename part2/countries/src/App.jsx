@@ -28,8 +28,12 @@ const App = () => {
     console.log(`Searching for ${searchedCountry}`);
 
     const countryMatches = countryNames.filter(country => country.toLowerCase().includes(searchedCountry.toLowerCase()))
+
+    console.log(countryMatches)
     
     const countryToShow = countryMatches[0]
+
+    console.log(countryToShow)
 
     setMatchingCountries(countryMatches)
 
@@ -51,9 +55,11 @@ const App = () => {
   const showCountry = (country) => {
     console.log(country)
 
-    setSearchedCountry(country)
-
-    console.log(searchedCountry)
+    axios
+      .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${country}`)
+      .then(response => {
+        setDisplayedCountry(response.data)
+      })
 
   }
 
