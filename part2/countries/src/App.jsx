@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Country from './components/Country'
+import MatchingCountries from './components/MatchingCountries'
 
 const App = () => {
   const [searchedCountry, setSearchedCountry] = useState('')
@@ -26,13 +27,18 @@ const App = () => {
   useEffect(() => {
     console.log(`Searching for ${searchedCountry}`);
 
-    const countryMatches = countryNames.filter(country => country.toLowerCase().startsWith(searchedCountry.toLowerCase()))
+    const countryMatches = countryNames.filter(country => country.toLowerCase().includes(searchedCountry.toLowerCase()))
     
     const countryToShow = countryMatches[0]
 
-    if (countryMatches.length <= 10) {
     setMatchingCountries(countryMatches)
-    }
+
+    // if (countryMatches.length <= 10) {
+    //   console.log('less than ten')
+    // setMatchingCountries(countryMatches)
+    // } else {
+    //   setMatchingCountries([])
+    // }
 
     if (countryMatches.length === 1) {
       console.log('only one country!')
@@ -44,12 +50,10 @@ const App = () => {
     } else {
       setDisplayedCountry(null)
     }
-    }, [searchedCountry])
+    }, [searchedCountry, countryNames])
 
   const handleCountryChange = (event) => {
     setSearchedCountry(event.target.value)
-    console.log(searchedCountry)
-    
   };
 
   return (
@@ -65,9 +69,7 @@ const App = () => {
             />
           </div>
         </form>
-        <div>
-          {matchingCountries}
-        </div>
+        <MatchingCountries searchedCountry={searchedCountry} matchingCountries={matchingCountries} />
         <div>
           <Country country={displayedCountry} />
         </div>
