@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
+const api_key = import.meta.env.VITE_SOME_KEY
+console.log(api_key)
+
 const Weather = ( { displayedCountry } ) => {
 
   const [weatherCountry, setWeatherCountry] = useState(null)
@@ -17,11 +20,12 @@ useEffect(() => {
     console.log(displayedCountry)
 
     axios
-      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=51fcb93bc42538c4fc1b8437243c3bc7`)
+      .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${api_key}`)
       .then(response => {
         console.log(response.data)
         setWeatherData(response.data)
-        console.log(response.data.main.temp)
+
+        console.log(response.data.weather[0].icon)
       })
       .catch(error => {
         console.log('Error fethcing weather data:', error)
@@ -42,14 +46,12 @@ useEffect(() => {
   return (
     <>
       <div>
-       <h2>Current weather in {displayedCountry.name.common}</h2>
+       <h2>Current weather in {displayedCountry.name.common}: {weatherData.weather[0].main}</h2>
       </div>
       <div>
-        <p>Lat: {displayedCountry.latlng[0]}</p>
-        <p>Long: {displayedCountry.latlng[1]}</p>
-      </div>
-      <div>
-        <p>Temperature: {(weatherData.main.temp - 273.15).toFixed(2)}</p>
+        <img src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`} alt='weather-icon'/>
+        <p>Temperature: {(weatherData.main.temp - 273.15).toFixed(2)}°C </p>
+        <p>Wind speed: {weatherData.wind.speed} m/s</p>
       </div>
     </>
   )
