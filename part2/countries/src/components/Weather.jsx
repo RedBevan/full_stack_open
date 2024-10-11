@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 
 const api_key = import.meta.env.VITE_SOME_KEY
-console.log(api_key)
 
 const Weather = ( { displayedCountry } ) => {
 

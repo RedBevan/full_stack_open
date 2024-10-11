@@ -19,33 +19,9 @@ const App = () => {
     })
   }, [])
 
-  useEffect(() => {
-    const getAllCountryNames = (countries) => {
-      return countries.map(country => country.name.common)
-    }
-    setCountryNames(getAllCountryNames(allCountries))
-  }, [allCountries])
-
-  useEffect(() => {
-    console.log(`Searching for ${searchedCountry}`);
-
-    const countryMatches = countryNames.filter(country => country.toLowerCase().includes(searchedCountry.toLowerCase()))
-    
-    const countryToShow = countryMatches[0]
-
-    setMatchingCountries(countryMatches)
-
-    if (countryMatches.length === 1) {
-      axios
-      .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${countryToShow}`)
-      .then(response => {
-        setDisplayedCountry(response.data)
-      })
-    } else {
-      setDisplayedCountry(null)
-    }
-    }, [searchedCountry, countryNames])
-
+  const handleCountryChange = (event) => {
+    setSearchedCountry(event.target.value)
+  };
 
   const showCountry = (country) => {
     console.log(country)
@@ -58,26 +34,26 @@ const App = () => {
       setSearchedCountry('')
   }
 
-  const handleCountryChange = (event) => {
-    setSearchedCountry(event.target.value)
-  };
-
   return (
     <>
       <div>
         <h1>Country fact-o-meter</h1>
+        
         <SearchInput
           searchCountry={searchedCountry}
           handleCountryChange={handleCountryChange}
         />
-        <MatchingCountries searchedCountry={searchedCountry} matchingCountries={matchingCountries} displayedCountry={displayedCountry} showCountry={showCountry}
+
+        <MatchingCountries
+        searchedCountry={searchedCountry} allCountries={allCountries}
+        showCountry={showCountry}
         />
-        <div>
-          <Country country={displayedCountry} />
-        </div>
-        <div>
-          <Weather displayedCountry={displayedCountry} />
-        </div>
+
+        <Country country={displayedCountry} />
+
+        <Weather displayedCountry={displayedCountry} />
+
+
       </div>
     </>
   )
