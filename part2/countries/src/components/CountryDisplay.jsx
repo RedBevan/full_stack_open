@@ -1,4 +1,4 @@
-const Country = ({ displayedCountry }) => {
+const CountryDisplay = ({ displayedCountry }) => {
 
   if (!displayedCountry) {
     return (
@@ -18,11 +18,11 @@ const Country = ({ displayedCountry }) => {
         <p>Borders {displayedCountry.borders.length} {displayedCountry.borders.length === 1 ? 'other country' : 'other countries'}</p>
       </div>
       <div>
-        <img src={displayedCountry.flags.png} alt="country flag"></img>
+        <img src={displayedCountry.flags.png} alt="country flag" className='flag'></img>
       </div>
 
     </>
   )
 }
 
-export default Country
+export default CountryDisplay

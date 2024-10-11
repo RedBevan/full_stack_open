@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import Country from './components/Country'
+import CountryDisplay from './components/CountryDisplay'
 import MatchingCountries from './components/MatchingCountries'
 import Weather from './components/Weather'
 import SearchInput from './components/SearchInput'
@@ -29,7 +29,6 @@ const App = () => {
   };
 
   const showCountry = (country) => {
-    console.log(country)
 
     axios
       .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${country}`)
@@ -54,7 +53,7 @@ const App = () => {
         showCountry={showCountry}
         />
 
-        <Country displayedCountry={displayedCountry} searchedCountry={searchedCountry} />
+        <CountryDisplay displayedCountry={displayedCountry} searchedCountry={searchedCountry} />
 
         <Weather displayedCountry={displayedCountry} />
 

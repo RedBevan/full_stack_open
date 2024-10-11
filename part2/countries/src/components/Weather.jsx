@@ -12,11 +12,7 @@ useEffect(() => {
   if (displayedCountry) {
     setWeatherCountry(displayedCountry)
 
-    console.log(displayedCountry.latlng)
-
     const [lat, lng] = displayedCountry.latlng
-
-    console.log(displayedCountry)
 
     axios
       .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${api_key}`)
