@@ -1,6 +1,6 @@
-const Country = ( {country} ) => {
+const Country = ({ displayedCountry }) => {
 
-  if (!country) {
+  if (!displayedCountry) {
     return (
       null
     )
@@ -10,15 +10,15 @@ const Country = ( {country} ) => {
     <>
 
       <div>
-        <h1>{country.name.common}</h1>
-        <h2>(Officially known as {country.name.official})</h2>
+        <h1>{displayedCountry.name.common}</h1>
+        <h2>(Officially known as {displayedCountry.name.official})</h2>
       </div>
       <div>
-        <p>Capital city: {country.capital}</p>
-        <p>Borders {country.borders.length} {country.borders.length === 1 ? 'other country' : 'other countries'}</p>
+        <p>Capital city: {displayedCountry.capital}</p>
+        <p>Borders {displayedCountry.borders.length} {displayedCountry.borders.length === 1 ? 'other country' : 'other countries'}</p>
       </div>
       <div>
-        <img src={country.flags.png} alt="country flag"></img>
+        <img src={displayedCountry.flags.png} alt="country flag"></img>
       </div>
 
     </>

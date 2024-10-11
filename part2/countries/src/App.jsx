@@ -9,8 +9,6 @@ const App = () => {
   const [searchedCountry, setSearchedCountry] = useState('')
   const [displayedCountry, setDisplayedCountry] = useState(null)
   const [allCountries, setAllCountries] = useState([])
-  const [countryNames, setCountryNames] = useState([])
-  const [matchingCountries, setMatchingCountries] = useState([])
 
   useEffect(() => {
     axios.get('https://studies.cs.helsinki.fi/restcountries/api/all')
@@ -18,6 +16,13 @@ const App = () => {
       setAllCountries(response.data)
     })
   }, [])
+
+  useEffect(() => {
+
+    if (!searchedCountry) {
+      setDisplayedCountry(null)
+    }
+  }, [searchedCountry])
 
   const handleCountryChange = (event) => {
     setSearchedCountry(event.target.value)
@@ -29,9 +34,9 @@ const App = () => {
     axios
       .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${country}`)
       .then(response => {
-        setDisplayedCountry(response.data)
+        setDisplayedCountry(response.data);
       })
-      setSearchedCountry('')
+      // setSearchedCountry('')
   }
 
   return (
@@ -40,7 +45,7 @@ const App = () => {
         <h1>Country fact-o-meter</h1>
         
         <SearchInput
-          searchCountry={searchedCountry}
+          searchedCountry={searchedCountry}
           handleCountryChange={handleCountryChange}
         />
 
@@ -49,7 +54,7 @@ const App = () => {
         showCountry={showCountry}
         />
 
-        <Country country={displayedCountry} />
+        <Country displayedCountry={displayedCountry} searchedCountry={searchedCountry} />
 
         <Weather displayedCountry={displayedCountry} />
 

@@ -32,10 +32,18 @@ const MatchingCountries = ({ searchedCountry, allCountries, showCountry }) => {
     return <p>No matches found for "{searchedCountry}"</p>;
   }
 
+  if (filteredCountries.length >= 11) {
+    return <p>Too many matches, please refine your search</p>
+  }
+
+  if (filteredCountries.length === 1) {
+    return null
+  }
+
   return (
     <ul>
       {filteredCountries.map((country) => (
-        <li key={country.cca3}>
+        <li key={country.name.common}>
           {country.name.common} 
           <button onClick={() => showCountry(country.name.common)}>
             Show

@@ -21,13 +21,10 @@ useEffect(() => {
     axios
       .get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${api_key}`)
       .then(response => {
-        console.log(response.data)
         setWeatherData(response.data)
-
-        console.log(response.data.weather[0].icon)
       })
       .catch(error => {
-        console.log('Error fethcing weather data:', error)
+        console.log('Error fetching weather data:', error)
       })
   }
 }, [displayedCountry])
