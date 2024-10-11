@@ -8,9 +8,10 @@ const Country = ( {country} ) => {
 
   return (
     <>
+
       <div>
-        <h2>{country.name.common}</h2>
-        <h3>(Officially known as {country.name.official})</h3>
+        <h1>{country.name.common}</h1>
+        <h2>(Officially known as {country.name.official})</h2>
       </div>
       <div>
         <p>Capital city: {country.capital}</p>
@@ -18,8 +19,8 @@ const Country = ( {country} ) => {
       </div>
       <div>
         <img src={country.flags.png} alt="country flag"></img>
-
       </div>
+
     </>
   )
 }

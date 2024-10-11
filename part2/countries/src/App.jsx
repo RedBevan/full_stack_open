@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Country from './components/Country'
 import MatchingCountries from './components/MatchingCountries'
+import Weather from './components/Weather'
 
 const App = () => {
   const [searchedCountry, setSearchedCountry] = useState('')
@@ -9,6 +10,8 @@ const App = () => {
   const [allCountries, setAllCountries] = useState([])
   const [countryNames, setCountryNames] = useState([])
   const [matchingCountries, setMatchingCountries] = useState([])
+  const [capitalLatitude, setCapitalLatitude] = useState(null)
+  const [capitalLongitude, setCapitalLongitude] = useState(null)
 
   useEffect(() => {
     axios.get('https://studies.cs.helsinki.fi/restcountries/api/all')
@@ -28,12 +31,8 @@ const App = () => {
     console.log(`Searching for ${searchedCountry}`);
 
     const countryMatches = countryNames.filter(country => country.toLowerCase().includes(searchedCountry.toLowerCase()))
-
-    console.log(countryMatches)
     
     const countryToShow = countryMatches[0]
-
-    console.log(countryToShow)
 
     setMatchingCountries(countryMatches)
 
@@ -51,6 +50,7 @@ const App = () => {
   const handleCountryChange = (event) => {
     setSearchedCountry(event.target.value)
   };
+
 
   const showCountry = (country) => {
     console.log(country)
@@ -80,6 +80,9 @@ const App = () => {
         <MatchingCountries searchedCountry={searchedCountry} matchingCountries={matchingCountries} displayedCountry={displayedCountry} showCountry={showCountry}/>
         <div>
           <Country country={displayedCountry} />
+        </div>
+        <div>
+          <Weather displayedCountry={displayedCountry} />
         </div>
       </div>
     </>
