@@ -3,6 +3,7 @@ import axios from 'axios'
 import Country from './components/Country'
 import MatchingCountries from './components/MatchingCountries'
 import Weather from './components/Weather'
+import SearchInput from './components/SearchInput'
 
 const App = () => {
   const [searchedCountry, setSearchedCountry] = useState('')
@@ -10,8 +11,6 @@ const App = () => {
   const [allCountries, setAllCountries] = useState([])
   const [countryNames, setCountryNames] = useState([])
   const [matchingCountries, setMatchingCountries] = useState([])
-  const [capitalLatitude, setCapitalLatitude] = useState(null)
-  const [capitalLongitude, setCapitalLongitude] = useState(null)
 
   useEffect(() => {
     axios.get('https://studies.cs.helsinki.fi/restcountries/api/all')
@@ -47,10 +46,6 @@ const App = () => {
     }
     }, [searchedCountry, countryNames])
 
-  const handleCountryChange = (event) => {
-    setSearchedCountry(event.target.value)
-  };
-
 
   const showCountry = (country) => {
     console.log(country)
@@ -61,23 +56,22 @@ const App = () => {
         setDisplayedCountry(response.data)
       })
       setSearchedCountry('')
-
   }
+
+  const handleCountryChange = (event) => {
+    setSearchedCountry(event.target.value)
+  };
 
   return (
     <>
       <div>
         <h1>Country fact-o-meter</h1>
-        <form>
-          <div>
-            Find countries: 
-            <input 
-            value={searchedCountry}
-            onChange={handleCountryChange}
-            />
-          </div>
-        </form>
-        <MatchingCountries searchedCountry={searchedCountry} matchingCountries={matchingCountries} displayedCountry={displayedCountry} showCountry={showCountry}/>
+        <SearchInput
+          searchCountry={searchedCountry}
+          handleCountryChange={handleCountryChange}
+        />
+        <MatchingCountries searchedCountry={searchedCountry} matchingCountries={matchingCountries} displayedCountry={displayedCountry} showCountry={showCountry}
+        />
         <div>
           <Country country={displayedCountry} />
         </div>
