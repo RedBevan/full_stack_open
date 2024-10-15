@@ -27,7 +27,7 @@ let persons = [
 app.use(express.json())
 
 app.get('/', (request, response) => {
-  response.send('<h1>Talinn</h1>')
+  response.send('<h1>Phonebook entries</h1>')
 })
 
 app.get('/api/persons', (request, response) => {
